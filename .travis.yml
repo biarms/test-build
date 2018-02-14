@@ -40,6 +40,9 @@ env:
 # install: true
 
 before_install:
+  - echo "before_install"
+
+script:
   - VERSION=$(grep "ENV VERSION" Dockerfile | sed 's/.*=//')
   - BUILD_NUMBER=${TRAVIS_BUILD_NUMBER}
   - >
@@ -72,8 +75,6 @@ before_install:
   - chmod +x manifest-tool
   - ls -l manifest-tool
   - bash -c './manifest-tool --version'
-
-script:
   - >
     echo "image: ${IMAGE_NAME}:${IMAGE_VERSION}" > manifest.yaml
   - >
