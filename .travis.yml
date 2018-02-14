@@ -58,6 +58,7 @@ before_install:
   - pushd tmp
   - curl -L -o qemu-arm-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/v2.9.1-1/x86_64_qemu-arm-static.tar.gz
   - tar xzf qemu-arm-static.tar.gz
+  - pwd && ls -lrta # debug
   - popd
   # When https://github.com/docker/cli/pull/138 merged branch will be part of an official release:
   # docker manifest create biarms/mysql biarms/mysql-arm
