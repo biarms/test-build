@@ -4,7 +4,8 @@ services:
   - docker
 
 # 'bash' is not a travis language. See https://docs.travis-ci.com/user/languages/
-language: generic
+# language: generic
+language: bash
 
 # See also:
 # 1. https://github.com/justincormack/cross-docker
