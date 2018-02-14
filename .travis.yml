@@ -22,14 +22,14 @@ language: generic
 #  "windows-amd64": {OS: "windows", Architecture: "amd64"},
 
 
-matrix:
-    include:
-        - os: linux
-          env: MY_ARCH=arm32v6
-        - os: linux
-          env: MY_ARCH=arm32v7
-        - os: osx
-          env: MY_ARCH=arm64v8
+# matrix:
+#     include:
+#         - os: linux
+#           env: MY_ARCH=arm32v6
+#         - os: linux
+#           env: MY_ARCH=arm32v7
+#         - os: osx
+#           env: MY_ARCH=arm64v8
 
 env:
   global:
