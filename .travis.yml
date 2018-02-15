@@ -54,7 +54,8 @@ before_install:
   - curl -L -o manifest-tool https://github.com/estesp/manifest-tool/releases/download/v0.7.0/manifest-tool-linux-386 &&
     chmod +x manifest-tool &&
     ls -l manifest-tool &&
-    bash -c './manifest-tool --version'
+    export PATH="$(pwd):$PATH" &&
+    bash -c 'manifest-tool --version'
 
 script:
   - make
