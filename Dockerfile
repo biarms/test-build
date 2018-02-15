@@ -1,5 +1,5 @@
 # Perform a multi-stage build as explained at https://docs.docker.com/v17.09/engine/userguide/eng-image/multistage-build/#name-your-build-stages
-FROM biarms/qemu-bin:2.9.1-1-beta-10 as qemu-bin-ref
+FROM biarms/qemu-bin:latest as qemu-bin-ref
 
 # To be able to build 'arm' images on Travis (which is x64 based), it is mandatory to explicitly reference the arm32v6/alpine:3.7
 # instead of 'alpine:3.7'
