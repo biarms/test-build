@@ -9,7 +9,7 @@ FROM arm32v6/alpine:3.7
 COPY --from=qemu-bin-ref /usr/bin/qemu-arm-static /usr/bin/qemu-arm-static
 
 ENV VERSION=0.0.1
-CMD "echo 'I am an arm32v6 image' && uname -a"
+CMD ["echo", "I am an arm32v6 image", "&&", "uname", "-a" ]
 
 # See http://label-schema.org/rc1/
 ARG BUILD_DATE
