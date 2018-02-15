@@ -61,11 +61,20 @@ tag: check
 push-image: check
 	docker push $(DOCKER_IMAGE_TAGNAME)
 
+# When https://github.com/docker/cli/pull/138 merged branch will be part of an official release:
+# docker manifest create biarms/mysql biarms/mysql-arm
+# docker manifest annotate biarms/mysql biarms/mysql-arm --os linux --arch arm
+# docker manifest push new-list-ref-name
+#
+# In the mean time, we use: https://github.com/estesp/manifest-tool
+# https://github.com/estesp/manifest-tool/releases/download/v0.7.0/manifest-tool-linux-arm64 &&
+#
 # See also:
 # 1. https://github.com/justincormack/cross-docker
 # 2. https://docs.docker.com/docker-for-mac/multi-arch/
-# 3. https://github.com/docker-library/official-images#architectures-other-than-amd64
-# 4. https://github.com/docker-library/official-images/blob/a7ad3081aa5f51584653073424217e461b72670a/bashbrew/go/vendor/src/github.com/docker-library/go-dockerlibrary/architecture/oci-platform.go#L14-L25
+# 3. https://docs.docker.com/registry/spec/manifest-v2-2/#example-manifest-list
+# 4. https://github.com/docker-library/official-images#architectures-other-than-amd64
+# 5. https://github.com/docker-library/official-images/blob/a7ad3081aa5f51584653073424217e461b72670a/bashbrew/go/vendor/src/github.com/docker-library/go-dockerlibrary/architecture/oci-platform.go#L14-L25
 #  "amd64":   {OS: "linux", Architecture: "amd64"},
 #  "arm32v5": {OS: "linux", Architecture: "arm", Variant: "v5"},
 #  "arm32v6": {OS: "linux", Architecture: "arm", Variant: "v6"},
