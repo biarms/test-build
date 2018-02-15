@@ -11,3 +11,4 @@ Source code is available on [github](https://github.com/biarms/test-build)
 Other references: 
 1. https://github.com/docker-library/official-images#architectures-other-than-amd64
 2. https://github.com/estesp/manifest-tool
+3. `docker run --rm --privileged multiarch/qemu-user-static:register --reset`

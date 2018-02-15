@@ -2,7 +2,7 @@ ARG BUILD_ARCH
 # Perform a multi-stage build as explained at https://docs.docker.com/v17.09/engine/userguide/eng-image/multistage-build/#name-your-build-stages
 FROM biarms/qemu-bin:latest as qemu-bin-ref
 
-FROM ${BUILD_ARCH}/debian:7.11-slim
+FROM ${BUILD_ARCH}/busybox
 # ARG BUILD_ARCH line was duplicated on purpose: "An ARG declared before a FROM is outside of a build stage, so it can’t be used in any instruction after a FROM."
 # See https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
 ARG BUILD_ARCH

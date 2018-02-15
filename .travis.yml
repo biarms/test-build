@@ -27,9 +27,9 @@ language: generic
 
 matrix:
     include:
-#        - os: linux
-#          env: BUILD_ARCH=arm32v6
-#          env: QEMU_ARCH=arm
+        - os: linux
+          env: BUILD_ARCH=arm32v6
+          env: QEMU_ARCH=arm
         - os: linux
           env: BUILD_ARCH=arm32v7
           env: QEMU_ARCH=arm
