@@ -27,12 +27,15 @@ language: generic
 
 matrix:
     include:
+#        - os: linux
+#          env: BUILD_ARCH=arm32v6
+#          env: QEMU_ARCH=arm
         - os: linux
-          env: MY_ARCH=arm32v6
-        - os: linux
-          env: MY_ARCH=arm32v7
+          env: BUILD_ARCH=arm32v7
+          env: QEMU_ARCH=arm
         - os: osx
-          env: MY_ARCH=arm64v8
+          env: BUILD_ARCH=arm64v8
+          env: QEMU_ARCH=aarch64
 
 env:
   global:
@@ -51,7 +54,7 @@ before_install:
       IMAGE_VERSION="${VERSION}-beta-${BUILD_NUMBER}"
       BETA_MODE="true"
     fi
-  - echo "MY_ARCH=${MY_ARCH} - IMAGE_VERSION=${IMAGE_VERSION} - TRAVIS_BRANCH=${TRAVIS_BRANCH} - DOCKER_USERNAME=${DOCKER_USERNAME}"
+  - echo "BUILD_ARCH=${BUILD_ARCH} - QEMU_ARCH=${QEMU_ARCH} - IMAGE_VERSION=${IMAGE_VERSION} - TRAVIS_BRANCH=${TRAVIS_BRANCH} - DOCKER_USERNAME=${DOCKER_USERNAME}"
   - docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
   - docker run --rm --privileged multiarch/qemu-user-static:register --reset
   # When https://github.com/docker/cli/pull/138 merged branch will be part of an official release:
@@ -85,7 +88,11 @@ script:
   # build the image
   - BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
   - VCS_REF=$(git rev-parse --short HEAD)
-  - docker build --build-arg VCS_REF=$VCS_REF --build-arg BUILD_DATE=${BUILD_DATE} -t ${IMAGE_NAME}:build .
+  - docker build --build-arg VCS_REF=$VCS_REF \
+                 --build-arg BUILD_DATE=${BUILD_DATE} \
+                 --build-arg BUILD_ARCH=${BUILD_ARCH} \
+                 --build-arg QEMU_ARCH=${QEMU_ARCH} \
+                 -t ${IMAGE_NAME}:build .
   # test the image
   - docker run --rm ${IMAGE_NAME}:build
 
