@@ -91,11 +91,12 @@ script:
   # build the image
   - BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
   - VCS_REF=$(git rev-parse --short HEAD)
-  - docker build --build-arg VCS_REF=$VCS_REF
-                 --build-arg BUILD_DATE=${BUILD_DATE}
-                 --build-arg BUILD_ARCH=${BUILD_ARCH}
-                 --build-arg QEMU_ARCH=${QEMU_ARCH}
-                 -t ${IMAGE_NAME}:build .
+  - make
+  # docker build --build-arg VCS_REF=$VCS_REF
+  #               --build-arg BUILD_DATE=${BUILD_DATE}
+  #               --build-arg BUILD_ARCH=${BUILD_ARCH}
+  #               --build-arg QEMU_ARCH=${QEMU_ARCH}
+  #               -t ${IMAGE_NAME}:build .
   # test the image
   - docker run --rm ${IMAGE_NAME}:build
 
@@ -103,7 +104,6 @@ after_success:
   - docker tag ${IMAGE_NAME}:build ${IMAGE_NAME}:linux-arm-${IMAGE_VERSION}
   - docker push ${IMAGE_NAME}:linux-arm-${IMAGE_VERSION}
   - bash -c './manifest-tool push from-spec manifest.yaml'
-  # TODO: if [[ "${TRAVIS_BRANCH}" == "master" ]] is certainly not enough: the 'Pull request build is a 'master' build -> images are pushed on dockerhub even if the pull request is not accepted)
   - >
     if [[ "${BETA_MODE}" == "false" ]]; then
       echo "Building master branch. Let's also push the 'latest' tag on docker hub"
