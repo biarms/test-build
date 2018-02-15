@@ -84,7 +84,7 @@ push-image: check
 #  "ppc64le": {OS: "linux", Architecture: "ppc64le"},
 #  "s390x": {OS: "linux", Architecture: "s390x"},
 #  "windows-amd64": {OS: "windows", Architecture: "amd64"},
-push-manifest: check
+push-manifest-core: check
 	# When https://github.com/docker/cli/pull/138 merged branch will be part of an official release:
 	# docker manifest create biarms/mysql biarms/mysql-arm
 	# docker manifest annotate biarms/mysql biarms/mysql-arm --os linux --arch arm
@@ -93,7 +93,6 @@ push-manifest: check
 	# In the mean time, I use: https://github.com/estesp/manifest-tool
 	# sudo wget -O /usr/local/bin manifest-tool https://github.com/estesp/manifest-tool/releases/download/v0.7.0/manifest-tool-linux-armv7
 	# sudo chmod +x /usr/local/bin/manifest-tool
-	echo "image: $(DOCKER_REGISTRY)$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_VERSION)" > manifest.yaml
 	echo "manifests:" >> manifest.yaml
 	echo "  - image: ${DOCKER_REGISTRY}${DOCKER_IMAGE_NAME}:linux-arm32v6-${DOCKER_IMAGE_VERSION}" >> manifest.yaml
 	echo "    platform:" >> manifest.yaml
@@ -112,7 +111,20 @@ push-manifest: check
 	echo "      variant: v8" >> manifest.yaml
 	manifest-tool push from-spec manifest.yaml
 
+push-manifest-first-line: check
+	echo "image: $(DOCKER_REGISTRY)$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_VERSION)" > manifest.yaml
+
+push-manifest-latest-first-line: check
+	echo "image: $(DOCKER_REGISTRY)$(DOCKER_IMAGE_NAME):latest" > manifest.yaml
+
+push-manifest: push-manifest-first-line push-manifest-core
+
 push: push-image push-manifest
+
+push-manifest-latest: push-manifest-latest-first-line push-manifest-core
+
+latest: push-manifest-latest
+	echo "Done"
 
 rmi: check
 	docker rmi -f $(DOCKER_IMAGE_NAME):build
