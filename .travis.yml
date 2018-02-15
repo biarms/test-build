@@ -88,10 +88,10 @@ script:
   # build the image
   - BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
   - VCS_REF=$(git rev-parse --short HEAD)
-  - docker build --build-arg VCS_REF=$VCS_REF \
-                 --build-arg BUILD_DATE=${BUILD_DATE} \
-                 --build-arg BUILD_ARCH=${BUILD_ARCH} \
-                 --build-arg QEMU_ARCH=${QEMU_ARCH} \
+  - docker build --build-arg VCS_REF=$VCS_REF
+                 --build-arg BUILD_DATE=${BUILD_DATE}
+                 --build-arg BUILD_ARCH=${BUILD_ARCH}
+                 --build-arg QEMU_ARCH=${QEMU_ARCH}
                  -t ${IMAGE_NAME}:build .
   # test the image
   - docker run --rm ${IMAGE_NAME}:build
