@@ -5,6 +5,7 @@ DOCKER_IMAGE_NAME=biarms/test-build
 default: build test
 
 check:
+	@env
 	@docker version > /dev/null
 	@if [[ "${BUILD_ARCH}" == "" ]]; then \
 		echo 'BUILD_ARCH is unset (MUST BE SET !)' && \
