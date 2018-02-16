@@ -9,19 +9,25 @@ Test images are pushed on [dockerhub](https://hub.docker.com/r/biarms/test-build
 Source code is available on [github](https://github.com/biarms/test-build).
 
 ## Prerequisites to understand what we are talking about:
+
 To understand this 'project', you should have read (and understood):
+
 1. https://github.com/docker-library/official-images#architectures-other-than-amd64
 2. https://github.com/estesp/mquery
 3. https://github.com/estesp/manifest-tool
 4. https://github.com/multiarch/qemu-user-static
 5. https://blog.hypriot.com/post/setup-simple-ci-pipeline-for-arm-images/
+
 Therefore, you should know what `docker run --rm --privileged multiarch/qemu-user-static:register --reset` is for.
 
 
 ## How docker manifest files are working ?
 
-First of all, let's see the docker manifest of the famous 'hello-world' image:
-`docker run --rm mplatform/mquery hello-world`
+First of all, let's see the docker manifest of the famous 'hello-world' image.
+
+`docker run --rm mplatform/mquery hello-world` actually returns:
+
+```
 Image: hello-world
  * Manifest List: Yes
  * Supported platforms:
@@ -34,8 +40,9 @@ Image: hello-world
    - linux/s390x
    - windows/amd64:10.0.14393.2068
    - windows/amd64:10.0.16299.248
+```
 
-If I run that message, I get that result:
+Now, if I run `docker run --rm hello-world`, I get that result:
 ```
 $ docker run --rm hello-world
 Unable to find image 'hello-world:latest' locally
@@ -95,6 +102,8 @@ arm32v5/hello-world             latest                                  75280d40
 
 That's a shame, because my cpu was able to handle the arm32v7 image:
 ```
+$ uname -a
+Linux odroid 4.9.27-35 #1 SMP PREEMPT Tue May 9 22:16:51 UTC 2017 armv7l armv7l armv7l GNU/Linux
 $ docker run --rm arm32v7/hello-world
 Unable to find image 'arm32v7/hello-world:latest' locally
 latest: Pulling from arm32v7/hello-world
@@ -116,7 +125,7 @@ To generate this message, Docker took the following steps:
 [...]
 ```
 
-Final docker image status:
+Final docker image status is quite explicit: hello-world <=> arm32v5/hello-world <=> 75280d40a50b:
 ```
 odroid@odroid:~$ docker images | grep hello
 arm32v7/hello-world             latest                                  a0a916f95f26        2 months ago        1.64kB
@@ -139,7 +148,6 @@ Image: busybox
    - linux/ppc64le
    - linux/s390x
 ```
-
 
 
 ## Testing with my images
@@ -171,7 +179,7 @@ Image: arm64v8/hello-world
    - linux/arm64/v8
 ```
 
-Now, let's play with my images. For release 0.0.1, I have created a manifest that looks like:
+For release 0.0.1, I have created a manifest that looks like:
 ```
 $ docker run --rm mplatform/mquery biarms/test-build:0.0.1
 Image: biarms/test-build:0.0.1
@@ -181,7 +189,7 @@ Image: biarms/test-build:0.0.1
    - linux/arm/v7
    - linux/arm/v6
 ```
-Be caution to the order: arm/v7 is before arm/v6
+Be caution to the order: arm/v7 is before arm/v6 (don't do that in the real world)
 
 
 If I run the `docker run --rm biarms/test-build:0.0.1` command on my odroid, I get:
@@ -227,7 +235,7 @@ Check carefully: no "I am an 'arm32v7' image and I am embedding the 'arm' qemu b
 
 ## Conclusions:
 1. Apparently, docker download the first matching image in the list, and don't care if there is a 'better matching' image.
-2. It is IMPORTANT to order the docker manifest file !
+2. It is IMPORTANT to order the docker manifest file (arm/v5 before arm/v6 before arm/v7, etc.). If you don't, it could fail !
 2. The 'meta data' of an image build with the 'qemu' emulator technique will not have correct manifest (but that's not a big deal: if a correct docker manifest is published, referencing that image, then it is the 'docker manifest' that is considered)
 3. The mapping of architecture 'labels' seams to be:
 
