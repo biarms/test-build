@@ -29,8 +29,6 @@ matrix:
            - QEMU_ARCH=aarch64
 
 before_install:
-  - VERSION=$(grep "ENV VERSION" Dockerfile | sed 's/.*=//')
-  - BUILD_NUMBER=${TRAVIS_BUILD_NUMBER}
   - >
     if [[ "${TRAVIS_BRANCH}" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then
       echo "We are building the master branch: version is official version."
@@ -38,10 +36,10 @@ before_install:
       BETA_MODE="false"
     else
       echo "We are not building the master branch (or we are in a PR mode). Building a beta version then"
-      IMAGE_VERSION="${VERSION}-beta-${BUILD_NUMBER}"
+      VERSION=$(grep "ENV VERSION" Dockerfile | sed 's/.*=//')
+      IMAGE_VERSION="${VERSION}-beta-${TRAVIS_BUILD_NUMBER}"
       BETA_MODE="true"
     fi
-  - echo "BUILD_ARCH=${BUILD_ARCH} - QEMU_ARCH=${QEMU_ARCH} - IMAGE_VERSION=${IMAGE_VERSION} - TRAVIS_BRANCH=${TRAVIS_BRANCH} - DOCKER_USERNAME=${DOCKER_USERNAME}"
   - docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
   - docker run --rm --privileged multiarch/qemu-user-static:register --reset
   # When https://github.com/docker/cli/pull/138 merged branch will be part of an official release:
@@ -58,11 +56,14 @@ before_install:
     bash -c 'manifest-tool --version'
 
 script:
-  - make
+  - export IMAGE_VERSION
+  - echo "BUILD_ARCH=${BUILD_ARCH} - QEMU_ARCH=${QEMU_ARCH} - IMAGE_VERSION=${IMAGE_VERSION} - TRAVIS_BRANCH=${TRAVIS_BRANCH} - DOCKER_USERNAME=${DOCKER_USERNAME}"
+  - make build test
 
 after_success:
+  - make tag push
   - >
     if [[ "${BETA_MODE}" == "false" ]]; then
       echo "Building master branch. Let's also push the 'latest' tag on docker hub"
-      make latest
+      make push-latest
     fi

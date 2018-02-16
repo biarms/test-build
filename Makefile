@@ -123,7 +123,7 @@ push: push-image push-manifest
 
 push-manifest-latest: push-manifest-latest-first-line push-manifest-core
 
-latest: push-manifest-latest
+push-latest: push-manifest-latest
 	echo "Done"
 
 rmi: check
