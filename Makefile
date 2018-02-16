@@ -94,21 +94,21 @@ push-manifest-core: check
 	# sudo wget -O /usr/local/bin manifest-tool https://github.com/estesp/manifest-tool/releases/download/v0.7.0/manifest-tool-linux-armv7
 	# sudo chmod +x /usr/local/bin/manifest-tool
 	echo "manifests:" >> manifest.yaml
-	echo "  - image: ${DOCKER_REGISTRY}${DOCKER_IMAGE_NAME}:linux-arm32v6-${DOCKER_IMAGE_VERSION}" >> manifest.yaml
-	echo "    platform:" >> manifest.yaml
-	echo "      architecture: arm" >> manifest.yaml
-	echo "      os: linux" >> manifest.yaml
-	echo "      variant: v6" >> manifest.yaml
-	echo "  - image: ${DOCKER_REGISTRY}${DOCKER_IMAGE_NAME}:linux-arm32v7-${DOCKER_IMAGE_VERSION}" >> manifest.yaml
-	echo "    platform:" >> manifest.yaml
-	echo "      architecture: arm" >> manifest.yaml
-	echo "      os: linux" >> manifest.yaml
-	echo "      variant: v7" >> manifest.yaml
 	echo "  - image: ${DOCKER_REGISTRY}${DOCKER_IMAGE_NAME}:linux-arm64v8-${DOCKER_IMAGE_VERSION}" >> manifest.yaml
 	echo "    platform:" >> manifest.yaml
 	echo "      architecture: arm64" >> manifest.yaml
 	echo "      os: linux" >> manifest.yaml
 	echo "      variant: v8" >> manifest.yaml
+	echo "  - image: ${DOCKER_REGISTRY}${DOCKER_IMAGE_NAME}:linux-arm32v7-${DOCKER_IMAGE_VERSION}" >> manifest.yaml
+	echo "    platform:" >> manifest.yaml
+	echo "      architecture: arm" >> manifest.yaml
+	echo "      os: linux" >> manifest.yaml
+	echo "      variant: v7" >> manifest.yaml
+	echo "  - image: ${DOCKER_REGISTRY}${DOCKER_IMAGE_NAME}:linux-arm32v6-${DOCKER_IMAGE_VERSION}" >> manifest.yaml
+	echo "    platform:" >> manifest.yaml
+	echo "      architecture: arm" >> manifest.yaml
+	echo "      os: linux" >> manifest.yaml
+	echo "      variant: v6" >> manifest.yaml
 	manifest-tool push from-spec manifest.yaml
 
 push-manifest-first-line: check
