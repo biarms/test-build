@@ -14,7 +14,7 @@ COPY --from=qemu-bin-ref /usr/bin/qemu-${QEMU_ARCH}-static /usr/bin/qemu-${QEMU_
 RUN echo "I am an '${BUILD_ARCH}' image and I am embedding the '${QEMU_ARCH}' qemu binary" > /root/info.txt
 
 CMD ["cat", "/root/info.txt"]
-ENV VERSION=0.0.1
+ENV VERSION=0.0.2
 
 # See http://label-schema.org/rc1/
 ARG BUILD_DATE
