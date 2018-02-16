@@ -1,6 +1,6 @@
 # biarms/test-build
 
-[![build status](https://api.travis-ci.org/biarms/test-build.svg?branch=master)](https://travis-ci.org/biarms/test-build)
+[![build status](https://travis-ci.org/biarms/test-build.svg?branch=master)](https://travis-ci.org/biarms/test-build)
 
 The goal of this git repo is to understand how works `docker pull` in a multi-architecture world (arm32v6, arm32v7, arm64v8, etc.) when using [docker manifest file](https://docs.docker.com/registry/spec/manifest-v2-2/#manifest-list)
 
