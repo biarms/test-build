@@ -11,7 +11,7 @@ ARG QEMU_ARCH
 # ADD https://github.com/multiarch/qemu-user-static/releases/download/v2.9.1-1/qemu-arm-static /usr/bin/qemu-arm-static
 COPY --from=qemu-bin-ref /usr/bin/qemu-${QEMU_ARCH}-static /usr/bin/qemu-${QEMU_ARCH}-static
 
-ENV VERSION=0.0.3
+ENV VERSION=0.0.4
 RUN echo "I am an '${BUILD_ARCH}' image (v${VERSION}) and I am embedding the '${QEMU_ARCH}' qemu binary" > /root/info.txt
 
 CMD ["cat", "/root/info.txt"]
