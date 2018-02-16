@@ -98,17 +98,17 @@ push-manifest-core: check
 	echo "    platform:" >> manifest.yaml
 	echo "      architecture: arm" >> manifest.yaml
 	echo "      os: linux" >> manifest.yaml
-	echo "      variant: v6" >> manifest.yaml
+	echo "      variant: armv5l" >> manifest.yaml
 	echo "  - image: ${DOCKER_REGISTRY}${DOCKER_IMAGE_NAME}:linux-arm32v7-${DOCKER_IMAGE_VERSION}" >> manifest.yaml
 	echo "    platform:" >> manifest.yaml
 	echo "      architecture: arm" >> manifest.yaml
 	echo "      os: linux" >> manifest.yaml
-	echo "      variant: v7" >> manifest.yaml
+	echo "      variant: armv6l" >> manifest.yaml
 	echo "  - image: ${DOCKER_REGISTRY}${DOCKER_IMAGE_NAME}:linux-arm64v8-${DOCKER_IMAGE_VERSION}" >> manifest.yaml
 	echo "    platform:" >> manifest.yaml
 	echo "      architecture: arm64" >> manifest.yaml
 	echo "      os: linux" >> manifest.yaml
-	echo "      variant: v8" >> manifest.yaml
+	echo "      variant: aarch64" >> manifest.yaml
 	manifest-tool push from-spec manifest.yaml
 
 push-manifest-first-line: check
