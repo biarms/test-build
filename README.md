@@ -233,11 +233,32 @@ Client:
 Check carefully: no "I am an 'arm32v7' image and I am embedding the 'arm' qemu binary" output on my raspberry pi1, while the arm/v6 was there !
 
 
+
+Now, a test from a amd64 env:
+```
+$ docker run --rm biarms/test-build:0.0.2
+Unable to find image 'biarms/test-build:0.0.2' locally
+0.0.2: Pulling from biarms/test-build
+docker: no matching manifest for linux/amd64 in the manifest list entries.
+See 'docker run --help'.
+
+$ docker run --rm biarms/test-build:linux-arm64v8-0.0.2
+Unable to find image 'biarms/test-build:linux-arm64v8-0.0.2' locally
+linux-arm64v8-0.0.2: Pulling from biarms/test-build
+509eddf12162: Already exists
+c93ed7c131b8: Pull complete
+2b2dcac89d54: Pull complete
+Digest: sha256:1879922c23998f552d67ec5d731a48765796fd6e9329dbfedfba4aae67792f8d
+Status: Downloaded newer image for biarms/test-build:linux-arm64v8-0.0.2
+I am an 'arm64v8' image and I am embedding the 'aarch64' qemu binary
+```
+
 ## Conclusions:
 1. Apparently, docker download the first matching image in the list, and don't care if there is a 'better matching' image.
 2. It is IMPORTANT to order the docker manifest file (arm/v5 before arm/v6 before arm/v7, etc.). If you don't, it could fail !
-2. The 'meta data' of an image build with the 'qemu' emulator technique will not have correct manifest (but that's not a big deal: if a correct docker manifest is published, referencing that image, then it is the 'docker manifest' that is considered)
-3. The mapping of architecture 'labels' seams to be:
+3. The 'meta data' of an image build with the 'qemu' emulator technique will not have correct manifest (but that's not a big deal: if a correct docker manifest is published, referencing that image, then it is the 'docker manifest' that is considered)
+4. Don't expect miracle from docker manifest if you are using the qemu emulator
+5. The mapping of architecture 'labels' seams to be:
 
 |docker official image prefix|docker manifest| uname -a  | Sample devices                                  |
 |----------------------------|---------------|-----------|-------------------------------------------------|
