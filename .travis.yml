@@ -29,8 +29,8 @@ matrix:
            - QEMU_ARCH=aarch64
 
 before_install:
+  - VERSION=$(grep "ENV VERSION" Dockerfile | sed 's/.*=//')
   - >
-    VERSION=$(grep "ENV VERSION" Dockerfile | sed 's/.*=//')
     if [[ "${TRAVIS_BRANCH}" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then
       echo "We are building the master branch: version is official version."
       IMAGE_VERSION="${VERSION}"
