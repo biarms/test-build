@@ -30,13 +30,13 @@ matrix:
 
 before_install:
   - >
+    VERSION=$(grep "ENV VERSION" Dockerfile | sed 's/.*=//')
     if [[ "${TRAVIS_BRANCH}" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then
       echo "We are building the master branch: version is official version."
       IMAGE_VERSION="${VERSION}"
       BETA_MODE="false"
     else
       echo "We are not building the master branch (or we are in a PR mode). Building a beta version then"
-      VERSION=$(grep "ENV VERSION" Dockerfile | sed 's/.*=//')
       IMAGE_VERSION="${VERSION}-beta-${TRAVIS_BUILD_NUMBER}"
       BETA_MODE="true"
     fi
