@@ -49,7 +49,7 @@ before_install:
   #
   # In the mean time, we use: https://github.com/estesp/manifest-tool
   # https://github.com/estesp/manifest-tool/releases/download/v0.7.0/manifest-tool-linux-arm64 &&
-  - curl -L -o manifest-tool https://github.com/estesp/manifest-tool/releases/download/v0.7.0/manifest-tool-linux-386 &&
+  - curl -L -o manifest-tool https://github.com/estesp/manifest-tool/releases/download/v0.8.0/manifest-tool-linux-386 &&
     chmod +x manifest-tool &&
     ls -l manifest-tool &&
     export PATH="$(pwd):$PATH" &&
