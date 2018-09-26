@@ -264,5 +264,5 @@ I am an 'arm64v8' image and I am embedding the 'aarch64' qemu binary
 |----------------------------|---------------|-----------|-------------------------------------------------|
 |          arm32v5           |linux/arm/v5   | ???       | TS-7700                                         |
 |          arm32v6           |linux/arm/v6   | armv6l    | RPI 1                                           |
-|          arm32v7           |linux/arm/v7   | armv7l    | RPI 2-3, Odroid XU4 (running a with 32 bits OS) |
-|          arm64v8           |linux/arm64/v8 | aarch64   | RPI 2-3, Odroid XU4 (running a with 64 bits OS) |
+|          arm32v7           |linux/arm/v7   | armv7l    | Odroid XU4, RPI 2-3 (running a with 32 bits OS) |
+|          arm64v8           |linux/arm64/v8 | aarch64   | RPI 2-3 (running a with 64 bits OS)             |
