@@ -9,10 +9,6 @@ services:
 # 'bash' is not a travis language. See https://docs.travis-ci.com/user/languages/
 language: generic
 
-#env:
-#  global:
-#    - IMAGE_NAME=biarms/test-build
-
 matrix:
     include:
         - os: linux
@@ -41,6 +37,7 @@ before_install:
       BETA_MODE="true"
     fi
   - docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
+  - docker version
   - docker run --rm --privileged multiarch/qemu-user-static:register --reset
   # When https://github.com/docker/cli/pull/138 merged branch will be part of an official release:
   # docker manifest create biarms/mysql biarms/mysql-arm
